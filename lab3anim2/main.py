@@ -104,12 +104,12 @@ class MainApplication(Canvas):
 
             current_cell.visited = True
             current_cell.draw_current_cell()
-            self.parent.after(100, self.parent.update())
+
             for i, cell in enumerate(visited_cells[1:]):
                 self.create_rectangle(cell.x*tile+5, cell.y*tile+5, cell.x*tile+tile-10, cell.y*tile+tile-10,
                                       fill=f'#{colors[i][0]:02x}{colors[i][1]:02x}{colors[i][2]:02x}')
 
-            #self.parent.after(1, self.parent.update())
+            self.parent.after(100, self.parent.update())
             next_cell = current_cell.check_neighbors(grid_cells)
             if next_cell:
                 next_cell.visited = True
@@ -141,9 +141,9 @@ def save_labyrinth(event: Event, canvas, file_name="lab"):
 
 
 if __name__ == '__main__':
-    cols = 10
-    rows = 10
-    tile = 50
+    cols = 5
+    rows = 5
+    tile = 100
     WINDOW_WIDTH = cols * tile
     WINDOW_HEIGHT = rows * tile
     root = Tk()

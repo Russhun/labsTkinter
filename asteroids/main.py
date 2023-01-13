@@ -57,7 +57,6 @@ class AsteroidCanvas(Canvas):
         self.EXPLOSION_SIZE_WIDTH = 199
         self.EXPLOSION_SIZE_HEIGHT = 170
 
-
         self.back_pil_image = Image.open("background.jpg").resize((self.WINDOW_WIDTH, self.WINDOW_HEIGHT))
         self.back_image = ImageTk.PhotoImage(self.back_pil_image)
         self.player_pil_image = Image.open("player.png").resize((self.SPACESHIP_WIDTH, self.SPACESHIP_HEIGHT))
@@ -69,7 +68,6 @@ class AsteroidCanvas(Canvas):
 
         self.asteroids_pil_list = [Image.open("asteroid.png").resize((int(self.ASTEROID_SIZE/i),
                                                                   int(self.ASTEROID_SIZE/i))) for i in range(1, 7)]
-
         self.asteroid_image_list = [ImageTk.PhotoImage(i) for i in self.asteroids_pil_list]
 
         self.create_image(300, 250, image=self.back_image)
@@ -86,7 +84,7 @@ class AsteroidCanvas(Canvas):
         self.asteroids.append(Asteroid(self.create_image(asteroid_spawn_x, asteroid_spawn_y, image=self.asteroid_image_list[size]),
                                        size, asteroid_spawn_x))
 
-    def move_asteroids(self):
+    def move_asteroids(self) -> None:
         if len(self.asteroids) < 15:
             asteroid_chance = random.randint(0, 100)
             if 40 < asteroid_chance < 50:
@@ -108,7 +106,7 @@ class AsteroidCanvas(Canvas):
             else:
                 self.move(asteroid.asteroid_id, asteroid.speed_x, asteroid.speed_y)
 
-    def move_ship(self):
+    def move_ship(self) -> None:
         self.move(self.spaceship, self.spaceship_x_speed, self.spaceship_y_speed)
         spaceship_x, spaceship_y = self.coords(self.spaceship)
         if spaceship_x > self.WINDOW_WIDTH:
@@ -180,7 +178,7 @@ class AsteroidCanvas(Canvas):
         if "space" not in history:
             self.SPACESHIP_DEFAULT_SPEED = 5
 
-    def start(self):
+    def start(self) -> None:
         if self.spaceship_health > 0:
             self.move_asteroids()
             self.move_ship()
@@ -189,13 +187,13 @@ class AsteroidCanvas(Canvas):
             self.create_text(300, 300, font=("", 64, "bold"), text=f"GAME OVER\n SCORE:{self.score}", fill="red")
 
 
-def pre_start(event):
-    print("www")
+def pre_start(event: Event) -> None:
     game.delete(game.enter)
     game.bind("<KeyPress>", game.movement_handler)
     game.bind("<KeyRelease>", game.stop_movement)
     game.unbind("<Enter>", bind_enter_id)
     game.start()
+
 
 root = Tk()
 root.title("Asteroids")
