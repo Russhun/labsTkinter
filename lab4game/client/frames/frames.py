@@ -52,10 +52,18 @@ class MainFrame(tk.Frame):
         if action == "set_side":
             if data[0] == "player_1":
                 self.game_canvas.pad1.configure(bg="red")
-                self.game_canvas.pad1.bind("<Key>", self.game_client.move_pad)
+                self.parent.bind("<Left>", self.game_client.move_pad_up)
+                self.parent.bind("<Right>", self.game_client.move_pad_down)
             elif data[0] == "player_2":
                 self.game_canvas.pad2.configure(bg="red")
-                self.game_canvas.pad2.bind("<Key>", self.game_client.move_pad)
+                self.parent.bind("<Right>", self.game_client.move_pad_up)
+                self.parent.bind("<Left>", self.game_client.move_pad_down)
+
+        if action == "start":
+            self.game_canvas.connection_label.place_forget()
+
+        if action == "update_field":
+            self.game_canvas.move(self.game_canvas.pad1, 0, data[0]["pad1_y"])
 
     def destroy(self) -> None:
         print("Destroing")
@@ -78,5 +86,5 @@ class MainFrame(tk.Frame):
             name="check_ping_task")
 
     def _init_game_canvas(self):
-        self.game_canvas.ball.bind("<Button-1>", lambda x: print(x))
+        pass
 

@@ -9,3 +9,5 @@ class AbstractGameField:
     pad2_coords: list[int, int]
     pads_speed: float
     ball_speed: list[int, int]
+    start: callable
+    pad1_movement_is_up: bool | None
